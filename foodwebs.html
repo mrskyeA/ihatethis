@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #happy{
+            display:flex;
+        }
+        #happy > *{
+            margin:20px;
+            padding:200px;
+            color:white;
+            background-color:blue;
+        }
+    </style>
+
+</head>
+<body>
+    sort from highest in food chain to lowest. :D:D:D:D:D:D:D
+    <div id = "happy"><div id = "apex">snake</div><div id = "producer">grass</div><div id = "secondary">squirrel</div><div id = "primary">worm</div></div>
+    <button onclick = "parent.won = true">win</button>
+</body>
+<script>
+    function arrayEquals(a, b) {
+        return Array.isArray(a) &&
+            Array.isArray(b) &&
+            a.length === b.length &&
+            a.every((val, index) => val === b[index]);
+    }
+    function swap(a, b) {
+        var p1 = a.parentNode,
+            p2 = b.parentNode,
+            i1,
+            i2;
+
+        if (!p1 || !p2 || p1.isEqualNode(b) || p2.isEqualNode(a)) return;
+
+        for (var i = 0; i < p1.children.length; i++) {
+            if (p1.children[i].isEqualNode(a)) {
+                i1 = i;
+            }
+        }
+        for (var i = 0; i < p2.children.length; i++) {
+            if (p2.children[i].isEqualNode(b)) {
+                i2 = i;
+            }
+        }
+
+        if (p1.isEqualNode(p2) && i1 < i2) {
+            i2++;
+        }
+        p1.insertBefore(b, p1.children[i1]);
+        p2.insertBefore(a, p2.children[i2]);
+    }
+    var list = document.getElementById("happy");
+    var array = [];
+    var kids = list.children;
+    window.selected = null;
+    var order = ["apex","secondary","primary","producer"]
+    //console.log(kids);
+    for(var i of kids){
+        //array.push({el:i})
+        i.addEventListener("click",function (){
+            //console.log(this.innerHTML);
+            if(selected != null){
+                //console.log(selected.innerHTML,this.innerHTML)
+                swap(selected,this);
+                selected = null;
+                return;
+            }
+            if(selected == null){
+                //console.log(this)
+                selected = this;
+                return;
+            }
+            
+        }.bind(i))
+    }
+    setInterval(()=>{
+        var array = [];
+        for(var i of list.children){
+            array.push(i.id);
+        }
+        if(arrayEquals(array,order)){
+            parent.won = true;
+        }
+        console.log(array);
+    },16)
+</script>
+</html>

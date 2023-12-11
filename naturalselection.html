@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+    <canvas id = "c"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("c");
+    var ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    var moths=[];
+    function createMoth(x,color){
+        var r = {
+            color:color,
+            dead:false,
+            w:64,
+            h:64,
+            x:x,
+            y:-20,
+            sp:10
+        }
+        moths.push(r);
+    }
+    setInterval(()=>{
+        var array = ["lightgrey","black"];
+        createMoth(parent.getRandomInt(canvas.width-64),array[parent.getRandomInt(2)]);
+    },1000);
+    setInterval(()=>{
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for(var i of moths){
+            i.y+=i.sp;
+            ctx.fillStyle = i.color;
+            ctx.fillRect(i.x,i.y,i.w,i.h);
+        }
+    },1000/60)
+</script>
+</html>

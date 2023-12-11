@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <img src = "" id = "tree"></img>
+        whats does the bony fish and the amphibians share?
+        <br/>
+        <div id = "questions">
+            <div>bony skeleton,jaws,vertebrae</div>
+            <div>lungs</div>
+            <div>jaws,four limbs</div>
+        </div>
+    </div>
+</body>
+<script>
+    var images ={
+        "phylogenetic.webp":["bony skeleton,jaws,vertebrae","lungs","jaws, four limbs"]
+    }
+    var keys = Object.keys(images)
+    var chosenImg = keys[parent.getRandomInt(keys.length)];
+    var questionParent = document.getElementById("questions");
+    var imgEl = document.getElementById("tree");
+    imgEl.src = chosenImg;
+    var questions = questionParent.children;
+    var selected = null;
+    console.log(questions);
+    for(var i = 0; i < questions.length; ++i){
+        var x = questions[i];
+        //console.log(x);
+        x.innerHTML = images[chosenImg][i];
+        x.addEventListener("click",function(){
+            if(selected){
+                selected.style.backgroundColor = "white";
+            }
+            selected = this;
+            this.style.backgroundColor = "grey";
+            if(this.innerHTML == images[chosenImg][0]){
+                parent.won = true;
+                
+            } else {
+                parent.won = false;
+            }
+        })
+    }
+</script>
+</html>

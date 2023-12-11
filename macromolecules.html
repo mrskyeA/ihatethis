@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #layout{
+            display:grid;
+            grid-template-rows:200px 200px 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id = "layout">
+        <div id = "macro">item</div>
+        <div id = "recipe"></div>
+        <div id = "ingredients">
+            <div id = "nucleotides">nucleotides</div>
+        
+            <div id = "nucleotides">amino acids</div>
+            <div id = "fats">fats</div>
+            <div id = "oils">oils</div>
+            <div id = "disaccharides">disaccharides</div>
+            <div id = "polysaccharides">polysaccharides</div>
+        </div>
+    </div>
+    
+</body>
+<script>
+    function arrayEquals(a, b) {
+        return Array.isArray(a) &&
+            Array.isArray(b) &&
+            a.length === b.length &&
+            a.every((val, index) => val === b[index]);
+    }
+    var ingredients = document.getElementById("ingredients");
+    var recipe = document.getElementById("recipe");
+    var macroEl = document.getElementById("macro");
+    var items = {
+        "lipid":["oils","fats"],
+        "carbohydrate":["disaccharides","polysaccharides"],
+        "proteins":["amino acids"],
+        "nucleic acids":["nucleotides"]
+    }
+    var keys = Object.keys(items)
+    var macro = keys[parent.getRandomInt(keys.length)];
+    macroEl.innerHTML = macro;
+    for(var i of ingredients.children){
+        i.addEventListener("click",function (){
+            //alert(this.parentNode);
+            if(this.parentNode.id == "ingredients"){
+                recipe.appendChild(this);
+            } else{
+                ingredients.appendChild(this);
+            }
+        }.bind(i));
+    }
+    setInterval(()=>{
+        var array = [];
+        for(var i of recipe.children){
+            array.push(i.id);
+        }
+        if(arrayEquals(array,items[macro])){
+            parent.won=true;
+        }
+    },16)
+</script>
+
+</html>
